@@ -1632,41 +1632,7 @@ with tabs[0]:
                         'latérale puis cliquez sur <b>PRÉDIRE</b> pour une nouvelle analyse.</div>',
                         unsafe_allow_html=True)
 
-        # ── Explicabilité SHAP (optionnel) ──────────────────────────────────
-        with st.expander("🔬 Détail technique — Facteurs influençant cette dose (SHAP)"):
-            try:
-                import shap
-                sexe_bin_ = 1 if pd_data["sexe"] == "HOMME" else 0
-                proc_bin_ = 1 if pd_data["proc_type"] == "ANGIO" else 0
-                X_shap = pd.DataFrame(
-                    [[pd_data["age"], sexe_bin_, pd_data["imc"], pd_data["duree"],
-                      pd_data["nb_series"], pd_data["nb_images"], proc_bin_]],
-                    columns=RF_FEATURES,
-                )
-                explainer  = shap.TreeExplainer(models["PDS_TOTAL"])
-                shap_vals  = explainer.shap_values(X_shap)
-                sv = shap_vals[0]
-                feat_fr  = ["Âge", "Sexe", "IMC", "Durée scopie", "Nb séries", "Nb images", "Procédure"]
-                sorted_i = np.argsort(np.abs(sv))[::-1]
-                fig_shap = go.Figure(go.Bar(
-                    x=[sv[i] for i in sorted_i],
-                    y=[feat_fr[i] for i in sorted_i],
-                    orientation="h",
-                    marker_color=["#f87171" if sv[i] > 0 else "#4ade80" for i in sorted_i],
-                ))
-                fig_shap.update_layout(
-                    title="Impact sur le PDS (rouge = augmente, vert = diminue)",
-                    template="plotly_dark", paper_bgcolor="#0a1628", plot_bgcolor="#0a1628",
-                    height=280, xaxis_title="Effet sur PDS (Gy·cm²)",
-                    margin=dict(t=40, b=10, l=10, r=10),
-                )
-                st.plotly_chart(fig_shap, use_container_width=True)
-            except ImportError:
-                st.info("Installez `shap` pour l'explicabilité détaillée : `pip install shap`")
-            except Exception as e:
-                st.warning(f"SHAP non disponible pour ce calcul : {e}")
-
-# ─────────────────────────────────────────────────────────────────────────────
+      
 # ONGLET 2 — MES SIMULATIONS
 # ─────────────────────────────────────────────────────────────────────────────
 with tabs[2]:
