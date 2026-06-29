@@ -1,7 +1,6 @@
 # =============================================================================
 #  CardioDose Optimizer  v6.0 — Version Finale Ultime
 #  Aide à la décision dosimétrique — Cardiologie Interventionnelle — CHU Algérie
-#  TP de fin d'études — Recherche Opérationnelle / Data Science médicale
 # =============================================================================
 #  Fonctionnalités :
 #   • Chargement CSV ultra-robuste (détection auto encodage/séparateur + upload)
@@ -14,7 +13,6 @@
 #   • Rapport PDF professionnel et complet (ReportLab optionnel)
 #   • Export CSV & Excel (openpyxl optionnel)
 #   • UX soignée : spinner, messages colorés, bouton Nouvelle Prédiction
-#   • Code modulaire, commenté, 100 % stable pour une soutenance
 # =============================================================================
 
 import streamlit as st
